@@ -1,0 +1,159 @@
+{
+  "fileTypes": [
+    "pless"
+  ],
+  "name": "Pointless",
+  "scopeName": "source.pointless",
+  "patterns": [
+    {
+      "name": "keyword.other.pointless",
+      "match": "\\b(tx|put|putch|putchars|define|libopen|libload)(?!')\\b"
+    },
+    {
+      "name": "keyword.control.pointless",
+      "match": "\\b(ifte|when|unless|linrec|tailrec)(?!')\\b"
+    },
+    {
+      "name": "constant.numeric.float.pointless",
+      "match": "\\b([0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\\b"
+    },
+    {
+      "name": "constant.numeric.pointless",
+      "match": "\\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b"
+    },
+    {
+      "name": "string.quoted.triple.pointless",
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.pointless"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.pointless"
+        }
+      }
+    },
+    {
+      "name": "string.quoted.double.pointless",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.pointless"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.pointless"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#characters"
+        },
+        {
+          "begin": "\\\\\\s",
+          "end": "\\\\",
+          "beginCaptures": {
+            "0": {
+              "name": "markup.other.escape.newline.begin.pointless"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "markup.other.escape.newline.end.pointless"
+            }
+          },
+          "patterns": [
+            {
+              "match": "\\S+",
+              "name": "invalid.illegal.character-not-allowed-here.pointless"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "markup.other.escape.newline.pointless",
+      "match": "\\\\$"
+    },
+    {
+      "name": "string.quoted.single.pointless",
+      "match": "(')((?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\\"'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_])))(')",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.string.begin.pointless"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#characters"
+            }
+          ]
+        },
+        "7": {
+          "name": "punctuation.definition.string.end.pointless"
+        }
+      }
+    },
+    {
+      "include": "#function_type_declaration"
+    },
+    {
+      "include": "#comments"
+    }
+  ],
+  "repository": {
+    "block_comment": {
+      "patterns": [
+        {
+          "name": "comment.block.pointless",
+          "begin": "\\{|\\(",
+          "end": "\\}|\\)",
+          "applyEndPatternLast": 1,
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.pointless"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#block_comment"
+            }
+          ]
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "begin": "(^[ \\t]+)?(?=\\$+(?![\\p{S}\\p{P}&&[^(),;\\[\\]`{}_\"']]))",
+          "end": "(?!\\G)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.pointless"
+            }
+          },
+          "patterns": [
+            {
+              "name": "comment.line.double-dash.pointless",
+              "begin": "\\$",
+              "end": "\\n",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.comment.pointless"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "include": "#block_comment"
+        }
+      ]
+    }
+  }
+}
