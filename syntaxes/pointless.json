@@ -6,6 +6,9 @@
   "scopeName": "source.pointless",
   "patterns": [
     {
+      "include": "#md_comment"
+    },
+    {
       "name": "keyword.other.pointless",
       "match": "\\b(tx|put|putch|putchars|define|libopen|libload)(?!')\\b"
     },
@@ -103,7 +106,10 @@
       "include": "#function_type_declaration"
     },
     {
-      "include": "#comments"
+      "include": "#line_comment"
+    },
+    {
+      "include": "#block_comment"
     }
   ],
   "repository": {
@@ -118,28 +124,18 @@
             "0": {
               "name": "punctuation.definition.comment.pointless"
             }
-          },
-          "patterns": [
-            {
-              "include": "#block_comment"
-            }
-          ]
+          }
         }
       ]
     },
-    "comments": {
+    "line_comment": {
       "patterns": [
         {
-          "begin": "(^[ \\t]+)?(?=\\$+(?![\\p{S}\\p{P}&&[^(),;\\[\\]`{}_\"']]))",
+          "begin": "(^[ \\t]+)?(?=\\$)",
           "end": "(?!\\G)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.whitespace.comment.leading.pointless"
-            }
-          },
           "patterns": [
             {
-              "name": "comment.line.double-dash.pointless",
+              "name": "comment.line.dollar.pointless",
               "begin": "\\$",
               "end": "\\n",
               "beginCaptures": {
@@ -149,9 +145,26 @@
               }
             }
           ]
-        },
+        }
+      ]
+    },
+    "md_comment": {
+      "patterns": [
         {
-          "include": "#block_comment"
+          "begin": "^(?=(\\S| \\S| {2}\\S| {3}\\S| {4}\\S| {5}\\S| {6}\\S| {7}\\S))",
+          "end": "(?!\\G)",
+          "patterns": [
+            {
+              "name": "comment.line.md.pointless",
+              "begin": "^",
+              "end": "\\n",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.comment.pointless"
+                }
+              }
+            }
+          ]
         }
       ]
     }
